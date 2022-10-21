@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { DateTime } = require('luxon');
 const Schema = mongoose.Schema;
 
-const UserSchema = newSchema({
+const UserSchema = new Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   username: { type: String, required: true },
