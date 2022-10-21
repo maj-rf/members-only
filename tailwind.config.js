@@ -5,5 +5,5 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-  separator: '/',
+  separator: '_',
 };
