@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  section 
+    h1= title 
+    form(action="" method="POST" id="sign-up-form")
+      div.form-group
+        label(for="username") Username 
+        input(type="text" name="username" placeholder="username")
+      div.form-group
+        label(for="password") Password
+        input(type="password" name="password")
+      button(type="submit") Sign Up 
+    
