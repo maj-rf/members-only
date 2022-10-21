@@ -4,13 +4,11 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    header 
-      nav
-        h1 
-          a(href='/') Home 
-        ul 
-          li 
-            a(href='/sign-up') Sign Up 
-          li 
-            a(href='') Log In
+    header(class='mb-4') 
+      nav(class="flex flex-col text-center sm/flex-row sm/text-left sm/justify-between py-4 px-6 bg-white shadow sm/items-baseline w-full")
+          div(class="mb-2 sm/mb-0") 
+            a(href='/' class="text-2xl no-underline text-grey-darkest hover/text-blue-dark") Home 
+          div  
+            a(href='/sign-up' class="text-lg no-underline text-grey-darkest hover/text-blue-dark ml-2") Sign Up  
+            a(href='' class="text-lg no-underline text-grey-darkest hover/text-blue-dark ml-2") Log In
     block content
