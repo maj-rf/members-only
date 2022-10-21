@@ -7,7 +7,8 @@
     "devstart": "nodemon ./bin/www -e js,scss,pug",
     "serverstart": "DEBUG=express-locallibrary-tutorial:* npm run devstart",
     "build:css": "postcss public/stylesheets/tailwind.css -o public/stylesheets/style.css",
-    "watch:css": "postcss public/stylesheets/tailwind.css -o public/stylesheets/style.css --watch"
+    "watch:css": "postcss public/stylesheets/tailwind.css -o public/stylesheets/style.css --watch",
+    "dev": "npm run devstart & npm run watch:css"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
