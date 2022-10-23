@@ -1,18 +1,17 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 require('dotenv').config();
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 const User = require('./models/userSchema');
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
 
-var app = express();
+const app = express();
 
 // MongoDB
 const mongoose = require('mongoose');
@@ -29,7 +28,7 @@ app.set('view engine', 'pug');
 passport.use(
   new LocalStrategy((username, password, done) => {
     User.findOne({ username: username }, (err, user) => {
-      if (err) done(err);
+      if (err) return done(err);
       if (!user) return done(null, false, { message: 'Incorrect username' });
       bcrypt.compare(password, user.password, (err, res) => {
         if (res) {
@@ -40,7 +39,6 @@ passport.use(
           return done(null, false, { msg: 'Incorrect password' });
         }
       });
-      return done(null, user);
     });
   }) // check if username exists and password matches
 );
@@ -57,6 +55,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(session({ secret: 'cats', resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(function (req, res, next) {
+  res.locals.currentUser = req.user;
+  next();
+});
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -65,7 +67,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
