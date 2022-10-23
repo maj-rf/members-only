@@ -11,9 +11,8 @@ block content
         h2.text-3xl.mb-2 Register
         p.mb-4 Create your account  
         form(action="" method="POST" id="sign-up-form")
-          div.form-group(class=" grid grid-cols-2 gap-5")
-            input(type="text" placeholder="First Name" name="firstname" class="border border-gray-400 py-1 px-2")
-            input(type="text" placeholder="Surname" name="surname" class="border border-gray-400 py-1 px-2")
+          div.form-group.mt-5
+            input(type="text" placeholder="Username" name="username" class="border border-gray-400 py-1 px-2 w-full") 
           div.form-group.mt-5
             input(type="email" placeholder="Email" name= "email" class="border border-gray-400 py-1 px-2 w-full")
           div.form-group.mt-5
@@ -25,4 +24,3 @@ block content
           div
             small Already have an account? 
               a.text-blue-500(href='/log-in') Login 
-  
