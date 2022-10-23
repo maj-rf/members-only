@@ -3,17 +3,12 @@ const { DateTime } = require('luxon');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
   username: { type: String, required: true },
+  email: { type: String, required: true },
   password: { type: String, required: true },
   admin: { type: Boolean, default: false },
   member: { type: Boolean, default: false },
   join_date: { type: Date, default: Date.now },
-});
-
-UserSchema.virtual('fullName').get(function () {
-  return `${this.firstName} ${this.lastName}`;
 });
 
 UserSchema.virtual('join_date_formatted').get(function () {
