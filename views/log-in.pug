@@ -2,10 +2,11 @@ extends layout
 
 block content
   section(class="min-h-screen flex items-center justify-center bg-blue-400")
-      div(class=" w-8/12 flex flex-col lg_flex-row bg-white rounded-xl mx-auto shadow-lg overflow-hidden")
-        div(class=" w-full lg_w-1/2 flex flex-col items-center justify-center p-12 bg-gray-400 text-white")
-          h1.text-3xl Welcome
-          p Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore quae quo praesentium! 
+      div(class=" w-8/12 flex flex-col lg_flex-row-reverse bg-white rounded-xl mx-auto shadow-lg overflow-hidden")
+        div(class=" w-full lg_w-1/2 flex flex-col items-center justify-center bg-form bg-no-repeat bg-cover bg-center bg-fixed text-black")
+          div.bg-white.bg-opacity-40.rounded-md.flex.flex-col.items-center.justify-center.h-full.w-full.p-10.text-center
+            h1.text-3xl Welcome Back!
+            p.text-2xl Log in to see the hidden messages.
         div(class=" w-full lg_w-1/2 py-16 px-12")
           h2.text-3xl Login to your account
           form(action="" method="POST" id="sign-up-form")
