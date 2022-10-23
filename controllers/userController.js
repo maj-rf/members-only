@@ -1,16 +1,27 @@
 const User = require('../models/userSchema');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
-exports.get_signup = (req, res) => res.render('sign-up');
+const passport = require('passport');
 
 exports.get_login = (req, res) => res.render('log-in');
 
-exports.post_signup = (req, res) => [
-  body('firstname', 'First Name is required')
+exports.get_signup = (req, res) => res.render('sign-up');
+
+exports.post_signup = [
+  body('username', 'Username is required')
     .trim()
-    .isLength({ min: 1 })
-    .escape(),
-  body('surname', 'Surname is required').trim().isLength({ min: 1 }).escape(),
+    .isLength({ min: 6 })
+    .escape()
+    .custom(async (username) => {
+      try {
+        const existingUsername = await User.findOne({ username: username });
+        if (existingUsername) {
+          throw new Error('username already in use');
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    }),
   body('email', 'Email is required')
     .trim()
     .normalizeEmail()
@@ -24,7 +35,7 @@ exports.post_signup = (req, res) => [
         throw new Error(err);
       }
     }),
-  body('password'.isLength(6).withMessage('Minimum length of 6 characters')),
+  body('password').isLength(6).withMessage('Minimum length of 6 characters'),
   body('confirm-pass').custom((value, { req }) => {
     if (value !== req.body.password) {
       return next('Passwords do not match.');
@@ -35,29 +46,33 @@ exports.post_signup = (req, res) => [
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.render('sign-up', {
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
+        username: req.body.username,
         email: errors.array(),
       });
       return;
-    }
-    const user = new User({
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      email: req.body.email,
-    });
+    } else {
+      bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
+        if (err) {
+          return next(err);
+        }
+        const newUser = new User({
+          username: req.body.username,
+          email: req.body.email,
+          password: hashedPassword,
+        });
 
-    bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
-      if (err) return next(err);
-      const user = new User({
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        email: req.body.email,
-        password: hashedPassword,
-      }).save((err) => {
-        if (err) return next(err);
-        res.redirect('/');
+        newUser.save((err) => {
+          if (err) {
+            return next(err);
+          }
+        });
+        return res.redirect('/log-in');
       });
-    });
+    }
   },
 ];
+
+exports.post_login = passport.authenticate('local', {
+  failureRedirect: 'log-in',
+  successRedirect: '/',
+});
