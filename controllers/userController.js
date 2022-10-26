@@ -3,7 +3,10 @@ const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
-exports.get_login = (req, res) => res.render('log-in');
+exports.get_login = (req, res) => {
+  if (res.locals.currentUser) return res.redirect('/');
+  res.render('log-in');
+};
 
 exports.get_signup = (req, res) => res.render('sign-up');
 
