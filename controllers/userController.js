@@ -35,19 +35,27 @@ exports.post_signup = [
         throw new Error(err);
       }
     }),
-  body('password').isLength(6).withMessage('Minimum length of 6 characters'),
-  body('confirm-pass').custom((value, { req }) => {
-    if (value !== req.body.password) {
-      return next('Passwords do not match.');
-    }
-    return true;
-  }),
-  (req, res, next) => {
+  body('password')
+    .trim()
+    .isLength({ min: 6 })
+    .escape()
+    .withMessage('Minimum length of 6 characters'),
+  body('confirm-pass')
+    .notEmpty()
+    .custom(async (value, { req }) => {
+      if (value !== req.body.password) {
+        return false;
+      }
+      return true;
+    })
+    .withMessage('Passwords do not match'),
+  async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.render('sign-up', {
         username: req.body.username,
-        email: errors.array(),
+        email: req.body.email,
+        errors: errors.array(),
       });
       return;
     } else {
@@ -82,6 +90,6 @@ exports.get_logout = (req, res, next) => {
     if (err) {
       return next(err);
     }
-    res.redirect('/log-in');
+    res.redirect('/');
   });
 };

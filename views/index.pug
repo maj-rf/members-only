@@ -7,9 +7,11 @@ block content
           a(href='/' class="text-2xl no-underline text-grey-darkest hover_text-blue-500") MembersOnly
         div  
           a(href='/sign-up' class="text-lg no-underline text-grey-darkest hover_text-blue-500") Sign Up  
+        if currentUser
+          a(href="/log-out") LOG OUT
+        else 
           a(href='/log-in' class="text-lg no-underline text-grey-darkest hover_text-blue-500 ml-2") Login
   h1= title
   p Welcome to #{title}
   if currentUser 
     h1 WELCOME BACK #{currentUser.username}
-    a(href="/log-out") LOG OUT

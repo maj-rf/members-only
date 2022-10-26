@@ -19,8 +19,18 @@ block content
             input(type="password" placeholder="Password" name="password" class="border border-gray-400 py-1 px-2 w-full")
           div.form-group.mt-5
             input(type="password" placeholder="Confirm Password" name="confirm-pass" class="border border-gray-400 py-1 px-2 w-full")
+          div.form-group.flex.flex-row.mt-5.overflow-x-auto.mx-auto(class=" w-3/4")
+            each val in [{id: "g1", src:"/images/g1.svg"}, {id: "g2", src:"/images/g2.svg"}, {id: "g3", src:"/images/g3.svg"}, {id: "g4", src:"/images/g4.svg"},{id: "b1", src:"/images/b1.svg"}, {id: "b2", src:"/images/b2.svg"}, {id: "b3", src:"/images/b3.svg"}, {id: "b4", src:"/images/b4.svg"}, {id: "nb1", src:"/images/nb1.svg"}, {id: "nb2", src:"/images/nb2.svg"}, {id: "nb3", src:"/images/nb3.svg"}]
+              div.h-full.shrink-0.mx-2
+                input.hidden(type="radio" id=val.id name="avatar" value=val.id checked)
+                label(for=val.id)
+                img.h-10(src=val.src)
           div.mt-5
             button.w-full.bg-purple-400.py-3.text-center.text-white(type="submit") Sign Up
           div
             small Already have an account? 
               a.text-blue-500(href='/log-in') Login 
+            if errors 
+              ul 
+                for error in errors 
+                  li!=error.msg
