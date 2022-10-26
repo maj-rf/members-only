@@ -1,0 +1,13 @@
+extends layout 
+
+block content 
+  include nav.pug
+  div
+    form(method='POST' action='' id='post_form')
+      div.form-group
+        label(for='title') Title:
+        input(type='text', placeholder='Title...' name='title')
+      div.form-group
+        label(for='message') Message:
+        input(type='text', placeholder='Message...' name='message')
+      button(type='submit') Submit
