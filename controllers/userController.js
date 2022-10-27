@@ -96,3 +96,9 @@ exports.get_logout = (req, res, next) => {
     res.redirect('/');
   });
 };
+
+exports.get_member_form = (req, res, next) => {
+  res.render('memberForm');
+};
+
+// exports.post_member_form = [body('secret-code', 'Please type a secret code.').trim().escape()];

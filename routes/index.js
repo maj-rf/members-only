@@ -9,10 +9,12 @@ router.get('/', indexController.get_index);
 // Posts Routes
 router.get('/messageForm', postController.message_get);
 router.post('/messageForm', postController.message_post);
+
 // User Routes
 router.get('/sign-up', userController.get_signup);
 router.get('/log-in', userController.get_login);
 router.post('/sign-up', userController.post_signup);
 router.post('/log-in', userController.post_login);
 router.get('/log-out', userController.get_logout);
+router.get('/memberForm', userController.get_member_form);
 module.exports = router;
