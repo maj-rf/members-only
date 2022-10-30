@@ -6,6 +6,9 @@ module.exports = {
       backgroundImage: {
         form: "url('/images/form-bg.png')",
       },
+      fontFamily: {
+        'jakarta-sans': ['Plus Jakarta Sans', 'sans-serif'],
+      },
     },
   },
   plugins: [],
