@@ -1,6 +1,6 @@
 const Post = require('../models/postSchema');
 
-exports.get_index = (req, res) => {
+exports.get_index = (req, res, next) => {
   Post.find({})
     .sort({ date_posted: 1 })
     .populate('user')
