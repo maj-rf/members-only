@@ -20,4 +20,8 @@ UserSchema.virtual('join_date_formatted').get(function () {
   return DateTime.fromJSDate(this.join_date).toLocaleString(DateTime.DATE_MED);
 });
 
+UserSchema.virtual('url').get(function () {
+  return '/profile/' + this._id;
+});
+
 module.exports = mongoose.model('User', UserSchema);
