@@ -7,14 +7,17 @@ block content
       div(class="my-4")
         a(href="/messageForm" class=" bg-cyan-400 text-white px-6 py-2 hover_bg-cyan-500 rounded") Send Message
     each post in post_list 
-      div(class= " flex flex-col bg-stone-900 border-4 border-white text-white rounded p-2 lg_w-2/3 w-10/12")  
-        h1.text-2xl.font-bold #{post.title} 
-        if currentUser
-          p #{post.message}
-        else 
-          p Sign Up and send the secret code to see message
-        p #{post.user.username}
-        p #{post.date_diff}
+      div(class="flex flex-row gap-2 bg-stone-900 border-4 border-white text-white rounded p-2 lg_w-2/3 w-10/12")
+        div(class=" w-1/6 shrink-0 self-start")
+          img.w-full.h-full.rounded-sm(src=`/images/${post.user.avatar}.svg`, alt=`${post.user.avatar} image`)
+        div(class=" flex flex-col")   
+          h1.text-2xl.font-bold= post.title
+          if currentUser
+            p #{post.message}
+          else 
+            p Sign Up and send the secret code to see message
+          p= post.user.username
+          p= post.date_diff
     
     
     
