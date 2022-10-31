@@ -13,7 +13,7 @@ block content
           else if currentUser 
             ul(class=" list-none flex items-center justify-between gap-3")
               li 
-                a(href="#" class="text-lg no-underline text-gray-700 hover_text-blue-500") Rozeluxe
+                a(href=currentUser.url class="text-lg no-underline text-gray-700 hover_text-blue-500") #{currentUser.username}
               li
                 a(href="/memberForm" class="text-lg no-underline text-gray-700 hover_text-blue-500") Membership
               li
