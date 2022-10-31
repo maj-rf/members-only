@@ -70,6 +70,7 @@ exports.post_signup = [
           username: req.body.username,
           email: req.body.email,
           password: hashedPassword,
+          avatar: req.body.avatar,
         });
 
         newUser.save((err) => {

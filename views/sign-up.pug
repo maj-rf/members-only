@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  section(class=" min-h-screen flex items-center justify-center bg-blue-400")
+  section(class=" min-h-screen flex items-center justify-center")
     div(class=" w-8/12 flex flex-col lg_flex-row bg-white rounded-xl mx-auto shadow-lg overflow-hidden")
       div(class=" w-full lg_w-1/2 flex flex-col items-center justify-center bg-form bg-no-repeat bg-cover bg-center bg-fixed text-black")
         div.bg-white.bg-opacity-40.rounded-md.flex.flex-col.items-center.justify-center.h-full.w-full.p-10.text-center
@@ -12,25 +12,25 @@ block content
         p.mb-4 Create your account  
         form(action="" method="POST" id="sign-up-form")
           div.form-group.mt-5
-            input(type="text" placeholder="Username" name="username" class="border border-gray-400 py-1 px-2 w-full") 
+            input(type="text" placeholder="Username" name="username" class=" py-1 px-2 w-full bg-gray-200 focus_outline-gray-700") 
           div.form-group.mt-5
-            input(type="email" placeholder="Email" name= "email" class="border border-gray-400 py-1 px-2 w-full")
+            input(type="email" placeholder="Email" name= "email" class=" py-1 px-2 w-full bg-gray-200 focus_outline-gray-700")
           div.form-group.mt-5
-            input(type="password" placeholder="Password" name="password" class="border border-gray-400 py-1 px-2 w-full")
+            input(type="password" placeholder="Password" name="password" class=" py-1 px-2 w-full bg-gray-200 focus_outline-gray-700")
           div.form-group.mt-5
-            input(type="password" placeholder="Confirm Password" name="confirm-pass" class="border border-gray-400 py-1 px-2 w-full")
-          div.form-group.flex.flex-row.mt-5.overflow-x-auto.mx-auto(class=" w-3/4")
-            each val in [{id: "g1", src:"/images/g1.svg"}, {id: "g2", src:"/images/g2.svg"}, {id: "g3", src:"/images/g3.svg"}, {id: "g4", src:"/images/g4.svg"},{id: "b1", src:"/images/b1.svg"}, {id: "b2", src:"/images/b2.svg"}, {id: "b3", src:"/images/b3.svg"}, {id: "b4", src:"/images/b4.svg"}, {id: "nb1", src:"/images/nb1.svg"}, {id: "nb2", src:"/images/nb2.svg"}, {id: "nb3", src:"/images/nb3.svg"}]
-              div.h-full.shrink-0.mx-2
-                input.hidden(type="radio" id=val.id name="avatar" value=val.id checked)
-                label(for=val.id)
-                img.h-10(src=val.src)
+            input(type="password" placeholder="Confirm Password" name="confirm-pass" class=" py-1 px-2 w-full bg-gray-200 focus_outline-gray-700")
+            div.form-group.flex.flex-row.mt-5.overflow-x-auto.mx-auto(class=" w-3/4 py-4")
+              each val in [{id: "g1", src:"/images/g1.svg"}, {id: "g2", src:"/images/g2.svg"}, {id: "g3", src:"/images/g3.svg"}, {id: "g4", src:"/images/g4.svg"},{id: "b1", src:"/images/b1.svg"}, {id: "b2", src:"/images/b2.svg"}, {id: "b3", src:"/images/b3.svg"}, {id: "b4", src:"/images/b4.svg"}, {id: "nb1", src:"/images/nb1.svg"}, {id: "nb2", src:"/images/nb2.svg"}, {id: "nb3", src:"/images/nb3.svg"}]
+                div.h-full.shrink-0.mx-2
+                  if val.id == "g1"
+                    input.hidden(type="radio" id=val.id name="avatar" value=val.id class="sr-only peer" checked )
+                  else 
+                    input.hidden(type="radio" id=val.id name="avatar" value=val.id class="sr-only peer")
+                  label(for=val.id class=" flex border peer-checked_ring-green-500 peer-checked_ring-2 peer-checked_border-transparent w-full")
+                    img.h-10(src=val.src)
           div.mt-5
             button.w-full.bg-purple-400.py-3.text-center.text-white(type="submit") Sign Up
           div
             small Already have an account? 
               a.text-blue-500(href='/log-in') Login 
-            if errors 
-              ul 
-                for error in errors 
-                  li!=error.msg
+            include showError.pug
