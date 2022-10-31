@@ -17,9 +17,9 @@ exports.message_post = [
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.render('index', {
-        title: req.body.username,
-        message: req.body.email,
+      res.render('messageForm', {
+        title: req.body.title,
+        message: req.body.message,
         errors: errors.array(),
       });
       return;
