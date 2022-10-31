@@ -2,7 +2,7 @@ const Post = require('../models/postSchema');
 
 exports.get_index = (req, res, next) => {
   Post.find({})
-    .sort({ date_posted: 1 })
+    .sort({ date_posted: -1 })
     .populate('user')
     .populate('title')
     .populate('message')

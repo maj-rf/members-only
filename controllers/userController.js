@@ -2,6 +2,7 @@ const User = require('../models/userSchema');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const item = require('../../gameventory/models/item');
 
 exports.get_login = (req, res) => {
   if (res.locals.currentUser) return res.redirect('/');
@@ -103,3 +104,20 @@ exports.get_member_form = (req, res, next) => {
 };
 
 // exports.post_member_form = [body('secret-code', 'Please type a secret code.').trim().escape()];
+
+exports.get_profile = (req, res, next) => {
+  User.findById(req.params.id)
+    .populate('username')
+    .populate('email')
+    .populate('avatar')
+    .populate('member')
+    .exec(function (err, user) {
+      if (err) return next(err);
+      res.render('profile', {
+        username: user.username,
+        email: user.email,
+        avatar: user.avatar,
+        member: user.member,
+      });
+    });
+};
