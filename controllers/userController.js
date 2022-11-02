@@ -104,14 +104,48 @@ exports.get_member_form = (req, res, next) => {
   res.render('memberForm');
 };
 
-// exports.post_member_form = [
-//   body('secret-code', 'Please type a secret code.').trim().escape(),
-//   (req, res, next) => {
+exports.post_member_form = [
+  body('secretcode', 'Please type a secret code.')
+    .trim()
+    .notEmpty()
+    .escape()
+    .custom((code) => {
+      if (code === 'member') {
+        return true;
+      }
+      return false;
+    })
+    .withMessage('Incorrect Secret Code. Try again.'),
 
-//   },
-// ];
+  async (req, res, next) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        res.render('memberForm', {
+          secretcode: req.body.secretcode,
+          errors: errors.array(),
+        });
+        return;
+      } else {
+        const update = {
+          member: true,
+        };
+        await User.findOneAndUpdate(
+          { _id: res.locals.currentUser._id },
+          update,
+          {
+            new: true,
+          }
+        );
+        res.redirect('/');
+      }
+    } catch (err) {
+      return next(err);
+    }
+  },
+];
 
-exports.get_profile = (req, res, next) => {
+exports.get_profile = async (req, res, next) => {
   async.parallel(
     {
       user: function (callback) {
