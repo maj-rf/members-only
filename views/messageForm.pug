@@ -3,14 +3,17 @@ extends layout
 block content 
   include nav.pug
 
-  div(class=" min-h-screen flex flex-col items-center justify-center")
-    div(class=" w-full max-w-md border p-4 rounded-md bg-white shadow-lg shadow-black")
-      form(method='POST' action='' id='post_form')
-        div.form-group(class="md_flex md_items-center mb-6")
-          label(for='title' class="block text-gray-500 font-bold p-2 md_w-1/3") Title
-          input(type='text', placeholder='Title...' name='title' class="w-full bg-gray-200 p-2 focus_outline-gray-700")
-        div.form-group(class="md_flex md_items-center mb-6")
-          label(for='message' class="block text-gray-500 font-bold p-2 md_w-1/3") Message
-          textarea(placeholder="I am sending you a message." name="message" rows="5" class="w-full resize-none bg-gray-200 p-2 focus_outline-gray-700") 
-        button(type='submit' class="shadow bg-purple-500 hover_bg-purple-400 focus_shadow-outline focus_outline-none text-white font-bold py-2 px-4 rounded") Submit
-      include showError.pug
+  div(class=" max-w-md mx-auto md_max-w-2xl bg-zinc-700 w-full mb-6 shadow-lg rounded-xl mt-28")
+    if !currentUser
+      include redirect.pug 
+    else
+      div(class=" flex flex-col border p-4 rounded-md bg-white shadow-lg shadow-black")
+        form(method='POST' action='' id='post_form')
+          div.form-group(class="md_flex md_items-center mb-6")
+            label(for='title' class="block text-gray-500 font-bold p-2 md_w-1/3") Title
+            input(type='text', placeholder='Title...' name='title' class="w-full bg-gray-200 p-2 focus_outline-gray-700")
+          div.form-group(class="md_flex md_items-center mb-6")
+            label(for='message' class="block text-gray-500 font-bold p-2 md_w-1/3") Message
+            textarea(placeholder="I am sending you a message..." name="message" rows="5" class="w-full resize-none bg-gray-200 p-2 focus_outline-gray-700") 
+          button(type='submit' class="shadow bg-purple-500 hover_bg-purple-400 focus_shadow-outline focus_outline-none text-white font-bold py-2 px-4 rounded") Submit
+        include showError.pug
