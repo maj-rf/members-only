@@ -18,4 +18,5 @@ router.post('/log-in', userController.post_login);
 router.get('/log-out', userController.get_logout);
 router.get('/memberForm', userController.get_member_form);
 router.get('/profile/:id', userController.get_profile);
+router.post('/memberForm', userController.post_member_form);
 module.exports = router;
