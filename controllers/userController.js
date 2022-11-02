@@ -1,8 +1,9 @@
 const User = require('../models/userSchema');
+const Post = require('../models/postSchema');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
-const item = require('../../gameventory/models/item');
+const async = require('async');
 
 exports.get_login = (req, res) => {
   if (res.locals.currentUser) return res.redirect('/');
@@ -103,21 +104,41 @@ exports.get_member_form = (req, res, next) => {
   res.render('memberForm');
 };
 
-// exports.post_member_form = [body('secret-code', 'Please type a secret code.').trim().escape()];
+// exports.post_member_form = [
+//   body('secret-code', 'Please type a secret code.').trim().escape(),
+//   (req, res, next) => {
+
+//   },
+// ];
 
 exports.get_profile = (req, res, next) => {
-  User.findById(req.params.id)
-    .populate('username')
-    .populate('email')
-    .populate('avatar')
-    .populate('member')
-    .exec(function (err, user) {
+  async.parallel(
+    {
+      user: function (callback) {
+        User.findById(req.params.id)
+          .populate('username')
+          .populate('email')
+          .populate('avatar')
+          .populate('member')
+          .populate('admin')
+          .exec(callback);
+      },
+      posts: function (callback) {
+        Post.find({ user: req.params.id }, 'title message')
+          .sort({ date: -1 })
+          .exec(callback);
+      },
+    },
+    function (err, results) {
       if (err) return next(err);
       res.render('profile', {
-        username: user.username,
-        email: user.email,
-        avatar: user.avatar,
-        member: user.member,
+        username: results.user.username,
+        email: results.user.email,
+        avatar: results.user.avatar,
+        member: results.user.member,
+        admin: results.user.admin,
+        post_list: results.posts,
       });
-    });
+    }
+  );
 };
