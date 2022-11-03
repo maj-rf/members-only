@@ -165,6 +165,7 @@ exports.get_profile = async (req, res, next) => {
     },
     function (err, results) {
       if (err) return next(err);
+
       res.render('profile', {
         username: results.user.username,
         email: results.user.email,
@@ -172,6 +173,7 @@ exports.get_profile = async (req, res, next) => {
         member: results.user.member,
         admin: results.user.admin,
         post_list: results.posts,
+        id: req.params.id,
       });
     }
   );
