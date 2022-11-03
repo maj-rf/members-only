@@ -15,13 +15,15 @@ PostSchema.virtual('url').get(function () {
 PostSchema.virtual('date_diff').get(function () {
   const rtf = new Intl.RelativeTimeFormat('en', {
     localeMatcher: 'best fit',
-    numeric: 'always',
+    numeric: 'auto',
     style: 'long',
   });
   const diff = Math.floor(
     new Date(this.date_posted - new Date()) / (1000 * 60 * 60 * 24)
   );
-  return rtf.format(diff, 'days');
+  return diff >= -1 && diff < 0
+    ? rtf.format(0, 'day')
+    : rtf.format(diff, 'days');
 });
 
 module.exports = mongoose.model('Post', PostSchema);
