@@ -7,7 +7,8 @@ exports.get_index = async (req, res, next) => {
       .populate('user')
       .populate('title')
       .populate('message')
-      .populate('date_posted');
+      .populate('date_posted')
+      .populate('_id');
     res.render('index', {
       title: 'Members Only',
       post_list: post_list,
