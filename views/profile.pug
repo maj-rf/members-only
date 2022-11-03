@@ -12,14 +12,16 @@ block content
         div(class="text-center mt-2")
           p(class="text-2xl text-gray-50 font-bold leading-normal mb-1")= username
           div(class=" text-lg mt-0 mb-2 font-bold")
-            p(class=" text-gray-100 opacity-75")= email 
+            p(class=" text-gray-100 opacity-75") #{currentUser && currentUser._id.toString() === id ? email : "Email Hidden" }
           div(class=" text-lg mt-0 mb-2 font-bold")
             p(class=" text-gray-100 opacity-75") Membership Status: #{admin === true ? 'admin' : member === true ? 'Member' : 'None'}
-        div(class="text-center")
-          h1.text-gray-100.text-2xl.font-bold Posts
-        div(class="w-full text-center h-60 overflow-y-auto p-2")
-          each post in post_list 
-              div(class=" flex flex-col mb-2 bg-stone-900 border-4 border-white text-white rounded")   
-                h1.text-lg.font-bold= post.title
-                p #{post.message}
-                p #{username}
+        
+        if currentUser && currentUser._id.toString() === id
+          div(class="text-center")
+            h1.text-gray-100.text-2xl.font-bold Posts
+          div(class="w-full text-center h-60 overflow-y-auto p-2")
+            each post in post_list 
+                div(class=" flex flex-col mb-2 bg-stone-900 border-4 border-white text-white rounded")   
+                  h1.text-lg.font-bold= post.title
+                  p #{post.message}
+                  p #{username}

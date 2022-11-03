@@ -7,10 +7,14 @@ block content
       include redirect.pug
     else
       div(class=" flex flex-col border p-4 rounded-md bg-white shadow-lg shadow-black")
-        form(method='POST' action='' id='member_form')
-          div 
-            p(class="text-2xl block text-gray-500 font-bold p-2") Become a member and see messages if you know the code!
-          div.form-group(class="md_flex md_items-center mb-6")
-            label(for='secretcode' class="block text-gray-500 font-bold md_w-2/5 p-2 text-lg") Secret Code
-            input(type='text', placeholder='Rendezvous...' name='secretcode' class="w-full bg-gray-200 p-2 focus_outline-gray-700")
-          button(type='submit' class="shadow bg-purple-500 hover_bg-purple-400 focus_shadow-outline focus_outline-none text-white font-bold py-2 px-4 rounded") Try
+        if currentUser && currentUser.member === true
+          p(class=" text-2xl block text-gray-500 font-bold p-2") You are already a member.
+          a.text-blue-500.text-lg.p-2(href="/") Home
+        else
+          form(method='POST' action='' id='member_form')
+            div 
+              p(class="text-2xl block text-gray-500 font-bold p-2") Become a member and see messages if you know the code!
+            div.form-group(class="md_flex md_items-center mb-6")
+              label(for='secretcode' class="block text-gray-500 font-bold md_w-2/5 p-2 text-lg") Secret Code
+              input(type='text', placeholder='Rendezvous...' name='secretcode' class="w-full bg-gray-200 p-2 focus_outline-gray-700")
+            button(type='submit' class="shadow bg-purple-500 hover_bg-purple-400 focus_shadow-outline focus_outline-none text-white font-bold py-2 px-4 rounded") Try

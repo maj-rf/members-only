@@ -12,7 +12,7 @@ block content
           img.w-full.h-full.rounded-sm(src=`/images/${post.user.avatar}.svg`, alt=`${post.user.avatar} image`)
         div(class=" flex flex-col")   
           h1.text-2xl.font-bold= post.title
-          if user
+          if currentUser && currentUser.member === true
             p #{post.message}
           else 
             p Sign Up and send the secret code to see message
